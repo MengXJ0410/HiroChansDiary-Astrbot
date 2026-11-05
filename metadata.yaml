@@ -1,0 +1,9 @@
+name: astrbot_plugin_diary
+display_name: 希罗酱の日记
+desc: 定时让 AI 角色写日记，追加进同一本「日记本」文件，可定时分享当天的日记。
+version: 0.3.2
+author: MXJ
+repo: "https://github.com/MengXJ0410/HiroChansDiary-Astrbot"
+astrbot_version: ">=4.0.0"
+support_platforms:
+  - aiocqhttp

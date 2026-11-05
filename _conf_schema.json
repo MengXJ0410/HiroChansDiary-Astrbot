@@ -1,0 +1,140 @@
+{
+  "umo": {
+    "description": "日记目标会话 UMO",
+    "type": "string",
+    "hint": "格式 平台适配器ID:消息类型:会话ID，例如 aiocqhttp:FriendMessage:10000000。可以对机器人发送 /sid 查看当前会话的 UMO，改成你自己的。",
+    "default": "aiocqhttp:FriendMessage:10000000"
+  },
+  "cron_expression": {
+    "description": "每日写日记时间（cron 表达式）",
+    "type": "string",
+    "hint": "五段式：分 时 日 月 周。默认 30 23 * * * 表示每天 23:30。开启「定期分享日记」后此项不再使用，改由分享时间统一「写好并发送」。",
+    "default": "30 23 * * *"
+  },
+  "timezone": {
+    "description": "时区",
+    "type": "string",
+    "hint": "必须与容器时区一致，否则日期和触发时间会错。",
+    "default": "Asia/Shanghai"
+  },
+  "persona_id": {
+    "description": "使用的人格",
+    "type": "string",
+    "hint": "填人格名称，需与 AstrBot 人格列表里的名字一致。留空则不带人格，只用内置日记提示词。",
+    "default": "希罗"
+  },
+  "diary_dir": {
+    "description": "日记目录（相对工作区）",
+    "type": "string",
+    "hint": "相对会话工作区根目录。默认 diary，最终路径为 data/workspaces/<UMO>/diary/。",
+    "default": "diary"
+  },
+  "book_file": {
+    "description": "日记本文件名",
+    "type": "string",
+    "hint": "所有日记都追加进这一个文件，模拟真实日记本。超过大小上限后自动新建 日记本-2.md、日记本-3.md。",
+    "default": "日记本.md"
+  },
+  "book_max_mb": {
+    "description": "日记本分卷大小（MB）",
+    "type": "int",
+    "hint": "单个日记本超过这个大小就新建下一卷。旧文件永不删除。默认 500。",
+    "default": 500
+  },
+  "user_alias": {
+    "description": "日记里对你的称呼",
+    "type": "string",
+    "hint": "日记正文和聊天记录里都用这个称呼，默认「他」。不会出现「主人」之类的叫法。",
+    "default": "他"
+  },
+  "chat_section_title": {
+    "description": "聊天段落的标题",
+    "type": "string",
+    "hint": "日记第二部分的小标题，默认「和他的聊天」。可改成「和TA的聊天」「和某某的聊天」等。当天没聊天时整段省略。",
+    "default": "和他的聊天"
+  },
+  "thought_enabled": {
+    "description": "结尾加一小段心里话",
+    "type": "bool",
+    "hint": "开启后日记最后会空一行、另起一段写 1-2 句自己的心里话（心情、后悔或得意的小事、想说没说的话），10-40 字，不加小标题。",
+    "default": true
+  },
+  "kaomoji_enabled": {
+    "description": "允许使用颜文字",
+    "type": "bool",
+    "hint": "开启后允许用颜文字表达情绪，例如 (≧◡≦)、(-_-;)、(*/ω＼*)。提示词会限制每篇 1-2 个，避免刷屏。",
+    "default": true
+  },
+  "notify": {
+    "description": "写完立即回传",
+    "type": "bool",
+    "hint": "写完当天日记后马上把全文发到目标会话。开启「定期分享日记」时此项自动失效，改由分享任务在指定时间发送，避免同一天发两遍。",
+    "default": true
+  },
+  "notify_prefix": {
+    "description": "发送前缀",
+    "type": "string",
+    "hint": "拼在当天日记前面。留空则直接发正文。",
+    "default": "这是今天的「希罗酱の日记」，想给你看一下"
+  },
+  "share_enabled": {
+    "description": "定期分享日记",
+    "type": "bool",
+    "hint": "开启后在分享时间「写好并发送」：到点时若当天日记还没写，先生成再发。此时不再单独运行每日写作任务，避免写两遍。",
+    "default": false
+  },
+  "share_cron": {
+    "description": "分享时间（cron 表达式）",
+    "type": "string",
+    "hint": "五段式：分 时 日 月 周。默认 30 23 * * * 表示每天 23:30 写好并发送。",
+    "default": "30 23 * * *"
+  },
+  "share_umo": {
+    "description": "分享目标会话",
+    "type": "string",
+    "hint": "留空则与上面的日记目标会话相同。想发到别的会话（例如群）时再填。",
+    "default": ""
+  },
+  "instant_trigger": {
+    "description": "现在立刻写一则日记",
+    "type": "bool",
+    "hint": "把开关打开并保存，插件会立刻以当前时间为止写一篇日记（带时间标记），追加进日记本并发到目标会话。写完自动复位，不影响当天的固定日记。",
+    "default": false
+  },
+  "max_context_chars": {
+    "description": "聊天记录上限（字符）",
+    "type": "int",
+    "hint": "超过则从最早的对话开始丢弃，保留最近的。私聊历史可能很长，建议 4000-12000。",
+    "default": 8000
+  },
+  "max_message_chars": {
+    "description": "单条消息上限（字符）",
+    "type": "int",
+    "hint": "QQ 长消息会被拆分成多条，按段落切分。建议不超过 1200。",
+    "default": 1000
+  },
+  "catchup_days": {
+    "description": "补写天数",
+    "type": "int",
+    "hint": "0 表示关闭。大于 0 时，每天凌晨检查最近 N 天缺哪些日记并补写（AstrBot 停机期间错过的任务官方不会补发）。补写需要历史里还留着那天的对话。",
+    "default": 0
+  },
+  "catchup_cron": {
+    "description": "补写检查时间（cron 表达式）",
+    "type": "string",
+    "hint": "仅在补写天数大于 0 时生效。默认 5 0 * * * 表示每天 00:05。",
+    "default": "5 0 * * *"
+  },
+  "provider_id": {
+    "description": "指定模型提供方",
+    "type": "string",
+    "hint": "留空则使用当前会话默认提供方。填 AstrBot 里的 provider id，例如 sqk/smart。",
+    "default": ""
+  },
+  "extra_instruction": {
+    "description": "附加写作要求",
+    "type": "string",
+    "hint": "追加到系统提示词末尾，用来微调语气或篇幅。留空则只使用内置提示词。",
+    "default": ""
+  }
+}
